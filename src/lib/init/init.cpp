@@ -77,3 +77,8 @@ extern "C" void exl_init() {
     virtmemSetup();
     exl::patch::impl::InitPatcherImpl();
 }
+
+extern "C" NORETURN void exl_exception_entry() {
+    /* TODO: exception handling */
+    EXL_ABORT(0x420);
+}
