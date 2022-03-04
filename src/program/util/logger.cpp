@@ -51,12 +51,6 @@ bool tryInitSocket() {
     return true;
 }
 
-u64 strlen(const char* str) {
-    u64 len = 0;
-    while (str[len++]);
-    return len;
-}
-
 namespace nn::util {
     s32 VSNPrintf(char* s, ulong n, const char* format, va_list arg);
 }
