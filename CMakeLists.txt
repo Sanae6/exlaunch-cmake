@@ -53,6 +53,5 @@ set_target_properties(subsdk9 PROPERTIES LINK_FLAGS "-specs ${CMAKE_BINARY_DIR}/
 add_custom_target(subsdk9_meta DEPENDS create_npdm subsdk9_nso)
 if (FTP_IP)
   ## Upload to target switch
-  add_custom_command(TARGET create_npdm POST_BUILD COMMAND ncftpput -C -P 5000 ${FTP_IP} ${CMAKE_BINARY_DIR}/subsdk9.npdm /atmosphere/contents/${TITLE_ID}/exefs/main.npdm)
-  add_custom_command(TARGET subsdk9_nso POST_BUILD COMMAND ncftpput -C -P 5000 ${FTP_IP} ${CMAKE_BINARY_DIR}/subsdk9 /atmosphere/contents/${TITLE_ID}/exefs/subsdk9)
+  add_custom_command(TARGET create_npdm POST_BUILD COMMAND ncftpput -P 5000 ${FTP_IP} /atmosphere/contents/${TITLE_ID}/exefs ${CMAKE_BINARY_DIR}/subsdk9.npdm ${CMAKE_BINARY_DIR}/subsdk9)
 endif ()
