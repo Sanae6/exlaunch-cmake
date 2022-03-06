@@ -21,5 +21,5 @@ extern "C" void ExlaunchAbort(uint32_t value) {
 }
 
 extern "C" void* ExlaunchHook(uintptr_t hook, uintptr_t callback) {
-    return (void*)(exl::util::Hook::HookFunc<void (*)()>(hook, callback, true));
+    return (void*)exl::util::Hook::HookFuncCommon(hook, callback, true);
 }
