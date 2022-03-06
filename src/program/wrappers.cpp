@@ -9,7 +9,9 @@ extern "C" uintptr_t ExlaunchGetSymbol(const char* text) {
 }
 
 extern "C" void ExlaunchLog(const char* text) {
+#ifdef LOGGER_ENABLED
     exl::logger::log("%s\n", text);
+#endif
 }
 
 extern "C" void ExlaunchAbort(uint32_t value) {

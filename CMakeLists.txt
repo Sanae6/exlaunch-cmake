@@ -9,8 +9,9 @@ endif ()
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 20)
 enable_language(ASM C CXX)
-if (NOT LOGGER_IP)
-  add_compile_definitions(LOGGER_IP="192.168.1.99")
+
+if (LOGGER_IP) # WIP logger
+  add_compile_definitions(LOGGER_ENABLED=true LOGGER_IP="${LOGGER_IP}")
 endif ()
 
 ## Title Id
@@ -53,5 +54,5 @@ set_target_properties(subsdk9 PROPERTIES LINK_FLAGS "-specs ${CMAKE_BINARY_DIR}/
 add_custom_target(subsdk9_meta DEPENDS create_npdm subsdk9_nso)
 if (FTP_IP)
   ## Upload to target switch
-  add_custom_command(TARGET create_npdm POST_BUILD COMMAND ncftpput -P 5000 ${FTP_IP} /atmosphere/contents/${TITLE_ID}/exefs ${CMAKE_BINARY_DIR}/subsdk9.npdm ${CMAKE_BINARY_DIR}/subsdk9)
+  add_custom_command(TARGET subsdk9_meta POST_BUILD COMMAND ncftpput -P 5000 ${FTP_IP} /atmosphere/contents/${TITLE_ID}/exefs ${CMAKE_BINARY_DIR}/subsdk9.npdm ${CMAKE_BINARY_DIR}/subsdk9)
 endif ()

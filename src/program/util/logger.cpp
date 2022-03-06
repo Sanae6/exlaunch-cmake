@@ -1,3 +1,4 @@
+#ifdef LOGGER_ENABLED
 #include "logger.hpp"
 #include "lib.hpp"
 #include "types.h"
@@ -86,3 +87,4 @@ namespace exl::logger {
         }
     }
 };
+#endif // LOGGER_ENABLED
