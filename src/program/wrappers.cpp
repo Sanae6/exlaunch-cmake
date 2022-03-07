@@ -1,8 +1,9 @@
 #include "types.h"
+#ifdef LOGGER_ENABLED
 #include "util/logger.hpp"
+#endif
 #include "util/symbol.hpp"
-#include "lib/diag/abort.hpp"
-#include "lib/util/nx_hook.hpp"
+#include "lib.hpp"
 
 extern "C" uintptr_t ExlaunchGetSymbol(const char* text) {
     return exl::ro::GetSymbol(text);
@@ -20,6 +21,11 @@ extern "C" void ExlaunchAbort(uint32_t value) {
     });
 }
 
-extern "C" void* ExlaunchHook(uintptr_t hook, uintptr_t callback) {
-    return (void*)exl::util::Hook::HookFuncCommon(hook, callback, true);
+extern "C" void* ExlaunchHook(uintptr_t hook, uintptr_t callback, bool trampoline) {
+    return (void*)exl::util::Hook::HookFuncCommon(hook, callback, trampoline);
+}
+
+extern void exl_setup() {
+    envSetOwnProcessHandle(exl::util::proc_handle::Get());
+    exl::util::Hook::Initialize();
 }

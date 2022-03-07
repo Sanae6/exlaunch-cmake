@@ -13,8 +13,11 @@ enum SocketLogState {
 
 SocketLogState socketLogState = SOCKET_LOG_UNINITIALIZED;
 s32 socket;
+#define QUEUE_SIZE 4096
+char preInitQueue[QUEUE_SIZE + 1] = {};
+int queueOffset = 0;
 
-bool tryInitSocket() {
+extern "C" bool tryInitSocket() {
     in_addr hostAddress = {0};
     sockaddr serverAddress = {0};
 
@@ -49,6 +52,9 @@ bool tryInitSocket() {
     }
 
     socketLogState = SOCKET_LOG_CONNECTED;
+
+    if (queueOffset > 0)
+        exl::logger::send(preInitQueue);
     return true;
 }
 
@@ -56,9 +62,17 @@ namespace nn::util {
     s32 VSNPrintf(char* s, ulong n, const char* format, va_list arg);
 }
 
+void queueText(const char* text) {
+    while (*text && queueOffset < QUEUE_SIZE) preInitQueue[queueOffset++] = *text++;
+}
+
 namespace exl::logger {
     void send(const char* data) {
-        if (socketLogState != SOCKET_LOG_CONNECTED && !tryInitSocket())
+        if (socketLogState == SOCKET_LOG_UNINITIALIZED) {
+            queueText(data);
+            return;
+        }
+        if (socketLogState == SOCKET_LOG_UNAVAILABLE && !tryInitSocket())
             return;
 
         if (nn::socket::Send(socket, data, strlen(data), 0) < 0) {
@@ -87,4 +101,8 @@ namespace exl::logger {
         }
     }
 };
+#else // LOGGER_ENABLED
+extern "C" bool tryInitSocket() {
+    return false;
+}
 #endif // LOGGER_ENABLED
