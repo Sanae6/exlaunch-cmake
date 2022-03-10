@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "object.hpp"
 
 // https://github.com/dotnet/runtime/blob/2330b4bef645bf8bcd3011f35968e55192c697f5/src/coreclr/nativeaot/Runtime/inc/MethodTable.h#L151
 enum Flags {
@@ -78,3 +79,5 @@ enum class CorElementType {
     Sentinel = 0x41,
     Pinned = 0x45,
 };
+
+extern "C" Object* RhpGcAlloc(MethodTable* methodTable, u32 _flags, uintptr_t elementCount);

@@ -10,6 +10,9 @@ public:
     void setMethodTable(MethodTable* newMethodTable) { methodTable = newMethodTable; }
 
     MethodTable* getMethodTable() { return methodTable; }
+    void* getRawData() {
+        return reinterpret_cast<void*>(((uintptr_t) this) + sizeof(uintptr_t));
+    }
 };
 
 class Array : public Object {
@@ -18,7 +21,7 @@ class Array : public Object {
 public:
     void setSize(int newSize) { size = newSize; }
 
-    s32 getSize() const { return size; }
+    [[nodiscard]] s32 getSize() const { return size; }
 };
 
 

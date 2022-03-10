@@ -1,7 +1,6 @@
 #include "curarch.hpp"
 #include "rhpgc.hpp"
 #include "lib.hpp"
-#include "object.hpp"
 
 extern "C" {
 
@@ -17,7 +16,9 @@ Object* RhpGcAlloc(MethodTable* methodTable, u32 _flags, uintptr_t elementCount)
         EXL_ASSERT(elementCount == 0);
     }
 
-    auto* object = static_cast<Object*>(malloc(finalSize));
+    auto* object = reinterpret_cast<Object*>(std::malloc(finalSize));
+
+    EXL_ASSERT(object != nullptr);
 
     object->setMethodTable(methodTable);
 
