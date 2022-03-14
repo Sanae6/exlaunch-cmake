@@ -22,8 +22,8 @@ extern "C" void ExlaunchAbort(uint32_t value) {
     });
 }
 
-extern "C" void* ExlaunchHook(uintptr_t hook, uintptr_t callback, bool trampoline) {
-    return (void*)exl::util::Hook::HookFuncCommon(hook, callback, trampoline);
+extern "C" uintptr_t ExlaunchHook(uintptr_t hook, uintptr_t callback, bool trampoline) {
+    return exl::util::Hook::HookFuncCommon(hook, callback, true);
 }
 
 
