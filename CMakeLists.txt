@@ -10,7 +10,7 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_STANDARD 23)
 enable_language(ASM C CXX)
 
-if (LOGGER_IP) # WIP logger
+if (LOGGER_IP)
   add_compile_definitions(LOGGER_ENABLED=true LOGGER_IP="${LOGGER_IP}")
 endif ()
 
