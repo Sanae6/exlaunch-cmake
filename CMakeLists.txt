@@ -33,7 +33,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/SwitchTools.cmake)
 
 ## subsdk9
 set(CMAKE_EXECUTABLE_SUFFIX ".elf")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-builtin-function=calloc")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 add_executable(subsdk9 ${SOURCES_ASM} ${SOURCES_C} ${SOURCES_H} ${SOURCES_CXX})
 add_compile_definitions(EXL_LOAD_KIND=Module EXL_LOAD_KIND_ENUM=EXL_LOAD_KIND_MODULE)
 target_link_libraries(subsdk9 ${LOCAL_LIBRARIES})
@@ -55,5 +55,5 @@ set_target_properties(subsdk9 PROPERTIES LINK_FLAGS "-specs ${CMAKE_BINARY_DIR}/
 add_custom_target(subsdk9_meta DEPENDS create_npdm subsdk9_nso)
 if (FTP_IP)
   ## Upload to target switch
-  add_custom_command(TARGET subsdk9_meta POST_BUILD COMMAND ncftpput -P 5000 ${FTP_IP} /atmosphere/contents/${TITLE_ID}/exefs ${CMAKE_BINARY_DIR}/subsdk9.npdm ${CMAKE_BINARY_DIR}/subsdk9)
+  add_custom_command(TARGET subsdk9_meta POST_BUILD COMMAND ncftpput -P 5000 ${FTP_IP} /atmosphere/contents/${TITLE_ID}/exefs ${CMAKE_BINARY_DIR}/main.npdm ${CMAKE_BINARY_DIR}/subsdk9)
 endif ()
