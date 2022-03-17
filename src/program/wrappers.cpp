@@ -30,8 +30,9 @@ static bool socketInitialized = false;
 MAKE_HOOK_T(int, _socketInitialize, (void* pool, u64 poolSize, u64 allocPoolSize, s32 concurLimit), {
     if (socketInitialized) return 0;
     socketInitialized = true;
-    impl(pool, poolSize, allocPoolSize, concurLimit);
+    int res = impl(pool, poolSize, allocPoolSize, concurLimit);
     exl::logger::init();
+    return res;
 })
 
 extern void exl_setup() {
@@ -40,7 +41,7 @@ extern void exl_setup() {
 
     _socketInitializeImpl =
             (int(*)(void*, u64, u64, s32))
-            exl::util::Hook::HookFunc((int(*)(void*, u64, u64, s32))exl::ro::GetSymbol("_ZN2nn6socket10InitializeEPvmmi"), &_socketInitializeHook);
+            exl::util::Hook::HookFunc((int(*)(void*, u64, u64, s32))exl::ro::GetSymbol("_ZN2nn6socket10InitializeEPvmmi"), &_socketInitializeHook, true);
 
     rtr::prepare();
 }
