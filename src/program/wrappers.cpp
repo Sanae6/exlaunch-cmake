@@ -39,9 +39,13 @@ extern void exl_setup() {
     envSetOwnProcessHandle(exl::util::proc_handle::Get());
     exl::util::Hook::Initialize();
 
+//    exl::diag::AbortImpl(exl::diag::AbortCtx {
+//        .m_Result = Result(0x24242042)
+//    });
+
     _socketInitializeImpl =
             (int(*)(void*, u64, u64, s32))
             exl::util::Hook::HookFunc((int(*)(void*, u64, u64, s32))exl::ro::GetSymbol("_ZN2nn6socket10InitializeEPvmmi"), &_socketInitializeHook, true);
 
-    rtr::prepare();
+//    rtr::prepare();
 }
