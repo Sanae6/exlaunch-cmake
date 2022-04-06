@@ -17,6 +17,7 @@ public:
 
 class Array : public Object {
     s32 size;
+    char data[0];
 
 public:
     void setSize(int newSize) { size = newSize; }
