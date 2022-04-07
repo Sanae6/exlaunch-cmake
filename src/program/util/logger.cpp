@@ -85,7 +85,7 @@ namespace exl::logger {
         char buf[0x500];
 
         if (nn::util::VSNPrintf(buf, sizeof(buf), fmt, args) > 0) {
-            send(buf);
+            exl::logger::send(buf);
         }
 
         va_end(args);
@@ -94,7 +94,7 @@ namespace exl::logger {
     void log(const char* fmt, va_list args) {
         char buf[0x500];
         if (nn::util::VSNPrintf(buf, sizeof(buf), fmt, args) > 0) {
-            send(buf);
+            exl::logger::send(buf);
         }
     }
 };
