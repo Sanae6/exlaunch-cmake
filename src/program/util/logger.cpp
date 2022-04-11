@@ -5,6 +5,7 @@
 #include "types.h"
 #include "nn/socket.hpp"
 #include "nn/nifm.hpp"
+#include "nn/fs.hpp"
 
 enum SocketLogState {
     SOCKET_LOG_UNINITIALIZED,
